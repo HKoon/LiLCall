@@ -53,10 +53,11 @@ const Messages = forwardRef<
                       "text-xs capitalize font-medium leading-none opacity-50 pt-4 px-3"
                     )}
                   >
-                    {msg.message.role}
-                  </div>
-                  <div className={"pb-3 px-3"}>{msg.message.content}</div>
-                  <Expressions values={{ ...msg.models.prosody?.scores }} />
+                     {msg.message.role === "Assistant" ? "Nicky" : 
+                   msg.message.role === "User" ? "You" : msg.message.role}
+                </div>
+                <div className={"pb-3 px-3"}>{msg.message.content}</div>
+                {/* <Expressions values={{ ...msg.models.prosody?.scores }} /> */}
                 </motion.div>
               );
             }
