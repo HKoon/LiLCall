@@ -10,10 +10,6 @@ const Messages = forwardRef<
   Record<never, never>
 >(function Messages(_, ref) {
   const { messages } = useVoice();
-  
-const isRole = (role: any): role is "Assistant" | "User" => {
-  return role === "Assistant" || role === "User";
-};
 
   return (
     <motion.div
@@ -57,11 +53,8 @@ const isRole = (role: any): role is "Assistant" | "User" => {
                       "text-xs capitalize font-medium leading-none opacity-50 pt-4 px-3"
                     )}
                   >
-                     {isRole(msg.message.role)
-                    ? msg.message.role === "Assistant"
-                      ? "Nicky"
-                      : "You"
-                    : msg.message.role}
+                       {msg.message.role.toLowerCase() === "assistant" ? "Nicky" : 
+    msg.message.role.toLowerCase() === "user" ? "You" : msg.message.role}
                 </div>
                 <div className={"pb-3 px-3"}>{msg.message.content}</div>
                 {/* <Expressions values={{ ...msg.models.prosody?.scores }} /> */}
