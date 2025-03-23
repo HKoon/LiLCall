@@ -1,19 +1,19 @@
-import type { Config } from "tailwindcss"
-import defaultTheme from 'tailwindcss/defaultTheme'
+import type { Config } from "tailwindcss";
+import defaultTheme from "tailwindcss/defaultTheme";
 
 const config = {
   darkMode: ["class"],
   content: [
-    './pages/**/*.{ts,tsx}',
-    './components/**/*.{ts,tsx}',
-    './app/**/*.{ts,tsx}',
-    './src/**/*.{ts,tsx}',
-	],
+    "./pages/**/*.{ts,tsx}",
+    "./components/**/*.{ts,tsx}",
+    "./app/**/*.{ts,tsx}",
+    "./src/**/*.{ts,tsx}",
+  ],
   prefix: "",
   theme: {
     fontFamily: {
-      'sans': ['var(--font-geist-sans)', ...defaultTheme.fontFamily.sans],
-      'mono': ['var(--font-geist-mono)', ...defaultTheme.fontFamily.mono],
+      sans: ["var(--font-geist-sans)", ...defaultTheme.fontFamily.sans],
+      mono: ["var(--font-geist-mono)", ...defaultTheme.fontFamily.mono],
     },
     container: {
       center: true,
@@ -57,6 +57,14 @@ const config = {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
         },
+        rpg: {
+          background: "hsl(var(--rpg-background))",
+          third: "hsl(var(--rpg-third))",
+          foreground: "hsl(var(--rpg-foreground))",
+          icon: "hsl(var(--rpg-icon))",
+          secondary: "hsl(var(--rpg-secondary))",
+          thirdBackground: "hsl(var(--rpg-third-background))",
+        },
       },
       borderRadius: {
         lg: "var(--radius)",
@@ -80,6 +88,6 @@ const config = {
     },
   },
   plugins: [require("tailwindcss-animate")],
-} satisfies Config
+} satisfies Config;
 
-export default config
+export default config;

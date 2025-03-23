@@ -4,6 +4,8 @@ import { GeistMono } from "geist/font/mono";
 import "./globals.css";
 import { Nav } from "@/components/Nav";
 import { cn } from "@/utils";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { Provider } from "@/components/providers/Provider";
 
 export const metadata: Metadata = {
   title: "Linkin.Love - Call your love",
@@ -24,8 +26,10 @@ export default function RootLayout({
           "flex flex-col min-h-screen"
         )}
       >
-        <Nav />
-        {children}
+        <Provider>
+          {/* <Nav /> */}
+          {children}
+        </Provider>
       </body>
     </html>
   );

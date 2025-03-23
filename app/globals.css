@@ -24,6 +24,13 @@
     --input: 240 5.9% 90%;
     --ring: 240 5.9% 10%;
     --radius: 0.5rem;
+
+    --rpg-background: 27 73% 97%;
+    --rpg-foreground: 12 5% 36%;
+    --rpg-third: 48 26% 89%;
+    --rpg-third-background: 27 13% 17%;
+    --rpg-icon: 48 26% 89%;
+    --rpg-secondary: 12 5% 36%;
   }
 
   .dark {
