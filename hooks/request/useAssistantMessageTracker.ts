@@ -5,16 +5,6 @@ import { useMutation } from "@tanstack/react-query";
 const API_BASE_URL =
   process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:3000";
 
-export interface GameData {
-  choices: any[];
-  isTouch: {
-    state: boolean;
-    intensity: number;
-    duration: number;
-  };
-  inSex: boolean;
-}
-
 interface AssistantMessage {
   role: string;
   content: string;

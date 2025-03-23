@@ -6,6 +6,25 @@ import { useEffect, useRef, useState } from "react";
 import { ScrollArea } from "../ui/scroll-area";
 import { useAssistantMessageTracker } from "@/hooks/request/useAssistantMessageTracker";
 import { DebugPanel } from "./DebugPanel";
+import { GameDataSchema } from "@/types/gameData";
+import { useDeviceCommunication } from "@/hooks/useDeviceCommunication";
+
+// 为 window.webkit 添加类型声明
+declare global {
+  interface Window {
+    webkit?: {
+      messageHandlers?: {
+        [key: string]: {
+          postMessage: (message: any) => void;
+        };
+      };
+    };
+    Android?: {
+      sendMessageToApp: (message: any) => void;
+    };
+    messageFromApp?: (data: any) => void;
+  }
+}
 
 const DemoCharMessages = function Messages() {
   const { messages } = useVoice();
@@ -17,14 +36,42 @@ const DemoCharMessages = function Messages() {
   const { isLoading, isError, data } = useAssistantMessageTracker();
   const [parsedGameData, setParsedGameData] = useState<any>(null);
 
-  // 当 data 变化时解析 gameData
+  const { sendTouchCommand } = useDeviceCommunication();
+
   useEffect(() => {
     if (data && data.choices && data.choices.length > 0) {
       try {
         const content = data.choices[0].message.content;
-        const gameData = JSON.parse(content);
-        setParsedGameData(gameData);
-        console.log("解析后的游戏数据:", gameData);
+        const jsonData = JSON.parse(content);
+
+        // 使用 Zod 验证解析后的数据
+        const validationResult = GameDataSchema.safeParse(jsonData);
+
+        if (validationResult.success) {
+          // 数据验证成功
+          setParsedGameData(validationResult.data);
+          console.log("解析后的游戏数据(已验证):", validationResult.data);
+
+          const gameData = validationResult.data.gameData;
+
+          // 处理触摸命令
+          if (gameData?.isTouch?.state) {
+            const { intensity, duration } = gameData.isTouch;
+            sendTouchCommand(intensity, duration);
+          }
+
+          // 处理预设模式
+          // 之后应该支持的
+          // if (gameData?.usePresetModel?.state) {
+          //   const { model, intensity, duration } = gameData.usePresetModel;
+          //   sendPresetModelCommand(model, intensity, duration);
+          // }
+        } else {
+          // 数据验证失败
+          console.error("游戏数据验证失败:", validationResult.error);
+          // 可以选择设置一个默认值或者保持 parsedGameData 为 null
+          setParsedGameData(jsonData); // 仍然设置原始数据用于调试
+        }
       } catch (error) {
         console.error("解析游戏数据失败:", error);
       }

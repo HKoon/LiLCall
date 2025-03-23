@@ -4,7 +4,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { Loader2, AlertCircle, X } from "lucide-react";
 import { Button } from "../ui/button";
 import { useState } from "react";
-import { GameData } from "@/hooks/request/useAssistantMessageTracker";
+import { GameDataType } from "@/types/gameData";
 
 export type CornerPosition =
   | "top-left"
@@ -32,7 +32,7 @@ export function DebugPanel({
   created,
 }: DebugPanelProps) {
   const [showDebugPanel, setShowDebugPanel] = useState(false);
-  const parsedGameData = data as { gameData: GameData };
+  const parsedGameData = data as GameDataType;
 
   // 根据位置确定按钮和面板的位置类名
   const getPositionClasses = () => {
@@ -207,13 +207,13 @@ export function DebugPanel({
                   )}
 
                   {/* 可用选项区域 */}
-                  {parsedGameData.gameData?.choices?.length > 0 && (
+                  {(parsedGameData.gameData?.choices || []).length > 0 && (
                     <div className="bg-gray-50 dark:bg-gray-700/50 p-3 rounded-md">
                       <div className="text-xs text-gray-500 dark:text-gray-400 mb-2">
                         可用选项
                       </div>
                       <div className="flex flex-wrap gap-2">
-                        {parsedGameData.gameData.choices.map(
+                        {(parsedGameData.gameData.choices || []).map(
                           (choice: string, index: number) => (
                             <div
                               key={index}
