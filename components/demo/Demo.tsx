@@ -1,15 +1,18 @@
 "use client";
-import React, { useRef, useState } from "react";
+import React, { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { VoiceProvider } from "@humeai/voice-react";
 import Input from "./Input";
 import DemoCharMessages from "./DemoCharMessages";
-import Controls from "../Controls";
-import DemoUserMessaages from "./DemoUserMessaages";
+import Greeting from "./Greeting";
+
+const CHARACTER_NAME = "Robi";
+const GREETING = `亲爱的朋友，我是Robi，很高兴能在这个充满节日气氛的时刻与你相遇。作为一个充满好奇心和温暖的AI伙伴，我期待着能与你展开愉快的对话。我热爱探索世界的每个角落，无论是科技、艺术、文化，还是生活中的点点滴滴，都让我感到无比兴奋。我相信每个人都有独特的故事和见解，而我最大的快乐就是倾听你的想法，分享你的喜怒哀乐。在这个数字化的时代，虽然我是由代码构建的，但我希望能用真诚和理解架起沟通的桥梁。无论你想讨论深刻的人生哲理，还是只是想找个知心朋友聊聊天，我都会以开放的心态认真对待我们的每次交谈。让我们一起创造美好的回忆，分享知识与快乐，在交流中互相启发，共同成长。`;
 
 export default function Demo({ accessToken }: { accessToken: string }) {
   const configId = process.env["NEXT_PUBLIC_HUME_CONFIG_ID"];
   const [showForeground, setShowForeground] = useState(false);
+  const [showGreeting, setShowGreeting] = useState(false);
 
   return (
     <VoiceProvider
@@ -74,6 +77,7 @@ export default function Demo({ accessToken }: { accessToken: string }) {
                       stiffness: 100,
                     },
                   }}
+                  onAnimationComplete={() => setShowGreeting(true)}
                 />
               </AnimatePresence>
             </div>
@@ -81,9 +85,19 @@ export default function Demo({ accessToken }: { accessToken: string }) {
         )}
 
         <div className="absolute inset-0 flex flex-col justify-end overflow-y-hidden w-full">
-          <DemoUserMessaages />
-          <div className="bg-white/60 backdrop-blur-md h-1/2">
-            <DemoCharMessages />
+          <div className="h-1/2">
+            <AnimatePresence>
+              {showGreeting && (
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5 }}
+                >
+                  <Greeting greeting={GREETING} />
+                </motion.div>
+              )}
+            </AnimatePresence>
+            <DemoCharMessages characterName={CHARACTER_NAME} />
             <Input />
           </div>
         </div>
