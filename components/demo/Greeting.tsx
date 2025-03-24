@@ -31,7 +31,13 @@ export default function Greeting({ greeting }: { greeting: string }) {
       setCurrentPosition(0);
       setShowArrow(textTotalHeight > maxDisplayHeight);
     }
-  }, [greeting]);
+
+    // 添加清理函数
+    return () => {
+      setCurrentPosition(0);
+      setShowArrow(false);
+    };
+  }, [greeting, status.value]); // 添加 status.value 作为依赖
 
   const handleScroll = () => {
     if (textRef.current) {
