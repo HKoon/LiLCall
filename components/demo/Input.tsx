@@ -9,8 +9,8 @@ import { Toggle } from "../ui/toggle";
 export default function Input() {
   const { status, connect, disconnect, micFft, isMuted, mute, unmute } =
     useVoice();
-
   const isConnected = status.value === "connected";
+  const isConnecting = status.value === "connecting";
 
   return (
     <div
@@ -19,9 +19,8 @@ export default function Input() {
         "bg-gradient-to-t from-card via-card/90 to-card/0"
       )}
     >
-      <AnimatePresence>
+      <AnimatePresence mode="wait">
         {!isConnected ? (
-          // 未连接状态的绿色电话按钮
           <motion.div
             initial="initial"
             animate="enter"
@@ -43,8 +42,10 @@ export default function Input() {
               <Button
                 className={cn(
                   "z-50 flex items-center justify-center rounded-full w-14 h-14 mb-10",
-                  "bg-green-500 hover:bg-green-600"
+                  "bg-green-500 hover:bg-green-600",
+                  isConnecting && "animate-pulse"
                 )}
+                disabled={isConnecting}
                 onClick={() => {
                   connect()
                     .then(() => {})
@@ -52,9 +53,22 @@ export default function Input() {
                     .finally(() => {});
                 }}
               >
-                <span>
+                <motion.span
+                  animate={
+                    isConnecting
+                      ? {
+                          rotate: [-10, 10, -10],
+                        }
+                      : {}
+                  }
+                  transition={{
+                    duration: 1,
+                    repeat: Infinity,
+                    ease: "easeInOut",
+                  }}
+                >
                   <Phone className="size-6 text-white" strokeWidth={2} />
-                </span>
+                </motion.span>
               </Button>
             </motion.div>
           </motion.div>
