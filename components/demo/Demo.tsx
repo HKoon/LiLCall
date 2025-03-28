@@ -42,7 +42,7 @@ export default function Demo({ accessToken }: { accessToken: string }) {
           >
             <img
               src={
-                "https://files.linkin.love/background/Christmas/background.webp"
+                "https://files.zotome.com/toy/scence/classroom1.webp"
               }
               alt="Challenge background | NSFW AI Roleplay Chat - Linkin.Love"
               className="w-full h-full object-cover"
@@ -57,7 +57,7 @@ export default function Demo({ accessToken }: { accessToken: string }) {
               <AnimatePresence>
                 <motion.img
                   key="default"
-                  src="https://files.linkin.love/background/Christmas/santa-hd.webp"
+                  src="https://files.zotome.com/toy/character/rubi.webp"
                   alt="Challenge foreground default | NSFW AI Roleplay Chat - Linkin.Love"
                   className="absolute inset-0 w-full h-full object-contain pointer-events-none"
                   loading="eager"
