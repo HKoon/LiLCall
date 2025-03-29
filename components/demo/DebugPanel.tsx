@@ -143,12 +143,12 @@ export function DebugPanel({
                       <div className="font-medium flex items-center">
                         <div
                           className={`w-2 h-2 rounded-full mr-2 ${
-                            parsedGameData.gameData?.isTouch?.state
+                            parsedGameData.gameData?.isTouch
                               ? "bg-green-500"
                               : "bg-gray-300"
                           }`}
                         ></div>
-                        {parsedGameData.gameData?.isTouch?.state
+                        {parsedGameData.gameData?.isTouch
                           ? "激活"
                           : "未激活"}
                       </div>
@@ -172,7 +172,7 @@ export function DebugPanel({
                   </div>
 
                   {/* 触摸参数区域 */}
-                  {parsedGameData.gameData?.isTouch?.state && (
+                  {parsedGameData.gameData?.isTouch && (
                     <div className="bg-gray-50 dark:bg-gray-700/50 p-3 rounded-md">
                       <div className="text-xs text-gray-500 dark:text-gray-400 mb-2">
                         触摸参数
@@ -186,7 +186,7 @@ export function DebugPanel({
                               style={{
                                 width: `${Math.min(
                                   100,
-                                  parsedGameData.gameData?.isTouch?.intensity *
+                                  parsedGameData.gameData?.power *
                                     100
                                 )}%`,
                               }}
@@ -196,33 +196,12 @@ export function DebugPanel({
                         <div>
                           <div className="text-xs mb-1">持续时间</div>
                           <div className="font-mono text-sm">
-                            {parsedGameData.gameData?.isTouch?.duration.toFixed(
+                            {parsedGameData.gameData?.duration.toFixed(
                               1
                             )}
                             s
                           </div>
                         </div>
-                      </div>
-                    </div>
-                  )}
-
-                  {/* 可用选项区域 */}
-                  {(parsedGameData.gameData?.choices || []).length > 0 && (
-                    <div className="bg-gray-50 dark:bg-gray-700/50 p-3 rounded-md">
-                      <div className="text-xs text-gray-500 dark:text-gray-400 mb-2">
-                        可用选项
-                      </div>
-                      <div className="flex flex-wrap gap-2">
-                        {(parsedGameData.gameData.choices || []).map(
-                          (choice: string, index: number) => (
-                            <div
-                              key={index}
-                              className="px-2 py-1 bg-purple-100 dark:bg-purple-900/30 text-purple-700 dark:text-purple-300 rounded text-xs"
-                            >
-                              {choice}
-                            </div>
-                          )
-                        )}
                       </div>
                     </div>
                   )}
