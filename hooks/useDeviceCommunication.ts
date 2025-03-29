@@ -9,7 +9,7 @@ type ModelMessage = {
   type: "model";
   data: {
     model: number;
-    intensity: number;
+    power: number;
     duration: number;
   };
 };
@@ -43,13 +43,13 @@ export const useDeviceCommunication = () => {
   }, []);
 
   // 发送触摸命令
-  const sendTouchCommand = useCallback((intensity: number, duration: number): boolean => {
+  const sendTouchCommand = useCallback((power: number, duration: number): boolean => {
     // 确保强度在有效范围内 (30-255)
-    const safeIntensity = Math.max(30, Math.min(255, intensity));
+    const safePower = Math.max(30, Math.min(255, power));
 
     const message: CommandMessage = {
       type: "command",
-      data: `V:1;M:r-0-${safeIntensity}-${duration}`,
+      data: `V:1;M:r-0-${safePower}-${duration}`,
     };
 
     return sendMessageToApp(message);
@@ -57,15 +57,15 @@ export const useDeviceCommunication = () => {
 
   // 发送预设模式命令
   const sendPresetModelCommand = useCallback((
-    model: number,
-    intensity: number,
+    preset: number,
+    power: number,
     duration: number
   ): boolean => {
     const message: ModelMessage = {
       type: "model",
       data: {
-        model,
-        intensity,
+        preset,
+        power,
         duration,
       },
     };
