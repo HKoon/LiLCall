@@ -19,7 +19,7 @@ interface DebugPanelProps {
   position?: CornerPosition;
   title?: string;
   buttonText?: string;
-  created: number; // 添加 created 属性
+  created: number;
 }
 
 export function DebugPanel({
@@ -34,7 +34,6 @@ export function DebugPanel({
   const [showDebugPanel, setShowDebugPanel] = useState(false);
   const parsedGameData = data as GameDataType;
 
-  // 根据位置确定按钮和面板的位置类名
   const getPositionClasses = () => {
     switch (position) {
       case "top-left":
@@ -154,40 +153,41 @@ export function DebugPanel({
                       </div>
                     </div>
                     
-                  {/* 触摸参数区域 */}
-                  {parsedGameData.gameData?.isTouch && (
-                    <div className="bg-gray-50 dark:bg-gray-700/50 p-3 rounded-md">
-                      <div className="text-xs text-gray-500 dark:text-gray-400 mb-2">
-                        触摸参数
-                      </div>
-                      <div className="space-y-2">
-                        <div>
-                          <div className="text-xs mb-1">强度</div>
-                          <div className="w-full bg-gray-200 dark:bg-gray-600 rounded-full h-2">
-                            <div
-                              className="bg-purple-500 h-2 rounded-full"
-                              style={{
-                                width: `${Math.min(
-                                  100,
-                                  parsedGameData.gameData?.power *
-                                    100
-                                )}%`,
-                              }}
-                            ></div>
+                    {/* 触摸参数区域 */}
+                    {parsedGameData.gameData?.isTouch && (
+                      <div className="bg-gray-50 dark:bg-gray-700/50 p-3 rounded-md">
+                        <div className="text-xs text-gray-500 dark:text-gray-400 mb-2">
+                          触摸参数
+                        </div>
+                        <div className="space-y-2">
+                          <div>
+                            <div className="text-xs mb-1">强度</div>
+                            <div className="w-full bg-gray-200 dark:bg-gray-600 rounded-full h-2">
+                              <div
+                                className="bg-purple-500 h-2 rounded-full"
+                                style={{
+                                  width: `${Math.min(
+                                    100,
+                                    parsedGameData.gameData?.power *
+                                      100
+                                  )}%`,
+                                }}
+                              ></div>
+                            </div>
+                          </div>
+                          <div>
+                            <div className="text-xs mb-1">持续时间</div>
+                            <div className="font-mono text-sm">
+                              {parsedGameData.gameData?.duration.toFixed(
+                                1
+                              )}
+                              s
+                            </div>
                           </div>
                         </div>
-                        <div>
-                          <div className="text-xs mb-1">持续时间</div>
-                          <div className="font-mono text-sm">
-                            {parsedGameData.gameData?.duration.toFixed(
-                              1
-                            )}
-                            s
-                          </div>
-                        </div>
                       </div>
-                    </div>
-                  )}
+                    )}
+                  </div>
 
                   {/* 所有游戏参数区域 */}
                   <div className="bg-gray-50 dark:bg-gray-700/50 p-3 rounded-md">
