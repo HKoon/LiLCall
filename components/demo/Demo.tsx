@@ -14,6 +14,12 @@ const GREETING = `|https://files.zotome.com/toy/scence/classroom1.webp|
 [USER]<https://files.zotome.com/toy/character/user.webp>"Go away"
 [OOC]You muttered, not looking up.`;
 
+type GreetingLine = {
+  type: "background" | "ooc" | "char" | "user";
+  content: string;
+  image?: string;
+};
+
 export default function Demo({ accessToken }: { accessToken: string }) {
   const configId = process.env["NEXT_PUBLIC_HUME_CONFIG_ID"];
   const [showForeground, setShowForeground] = useState(false);
@@ -21,18 +27,14 @@ export default function Demo({ accessToken }: { accessToken: string }) {
   const [currentLineIndex, setCurrentLineIndex] = useState(0);
   const [backgroundImage, setBackgroundImage] = useState("");
   const [foregroundImage, setForegroundImage] = useState("");
-  const [greetingLines, setGreetingLines] = useState<Array<{
-    type: "background" | "ooc" | "char" | "user";
-    content: string;
-    image?: string;
-  }>>([]);
+  const [greetingLines, setGreetingLines] = useState<GreetingLine[]>([]);
 
   // 解析GREETING文本
   useEffect(() => {
     if (!GREETING) return;
 
     const lines = GREETING.split("\n").filter(line => line.trim());
-    const parsedLines = [];
+    const parsedLines: GreetingLine[] = [];
 
     for (const line of lines) {
       // 处理背景图
@@ -52,7 +54,7 @@ export default function Demo({ accessToken }: { accessToken: string }) {
         parsedLines.push({
           type: "char",
           content: charMatch[3] || "",
-          image: charMatch[2] || ""
+          image: charMatch[2] || undefined
         });
         continue;
       }
@@ -63,7 +65,7 @@ export default function Demo({ accessToken }: { accessToken: string }) {
         parsedLines.push({
           type: "user",
           content: userMatch[3] || "",
-          image: userMatch[2] || ""
+          image: userMatch[2] || undefined
         });
         continue;
       }
@@ -91,7 +93,7 @@ export default function Demo({ accessToken }: { accessToken: string }) {
     }
   }, []);
 
-  const handleLineChange = (index: number, lines = greetingLines) => {
+  const handleLineChange = (index: number, lines: GreetingLine[] = greetingLines) => {
     if (index >= lines.length) {
       setShowGreeting(false);
       return;
