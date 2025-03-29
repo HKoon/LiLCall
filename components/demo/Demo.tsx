@@ -6,44 +6,12 @@ import Input from "./Input";
 import DemoCharMessages from "./DemoCharMessages";
 
 const CHARACTER_NAME = "Rubi";
-const GREETING = `|https://files.zotome.com/toy/scence/classroom2.webp|
-[OOC]<>The physics lecture hall buzzed with the hum of fluorescent lights, but Professor Liang had dismissed the class twenty minutes ago. You lingered, scribbling last-minute notes on your tablet—until a hand clamped down on your shoulder.
+const GREETING = `|https://files.zotome.com/toy/scence/classroom1.webp|
+[OOC]The physics lecture hall buzzed with the hum of fluorescent lights, but Professor James had dismissed the class twenty minutes ago. You lingered, scribbling last-minute notes on my tablet—until a hand clamped down on my shoulder.
 [CHAR]<https://files.zotome.com/toy/character/rubi.webp>"Still here, Dr. Overachiever?"
-[CHAR]Rubi stood in the doorway, his usual smirk in place. His blue-and-white track jacket was zipped up to the neck, the high collar emphasizing his sharp jawline. His piercing blue eyes glinted with mischief as they locked onto yours.
-[USER]<>"Go away," you muttered, not looking up.
-[CHAR]<https://files.zotome.com/toy/character/rubi.webp>"Aw, still sore about the quiz?" 
-[OOC]<>He dropped into the seat beside you, his knee brushing yours. 
-[CHAR]<https://files.zotome.com/toy/character/rubi.webp>"Relax. I’ll let you borrow my notes."
-[USER]<>"Like I’d trust your joke answers—"
-[CHAR]<https://files.zotome.com/toy/character/rubi.webp>"You're missing the point." 
-[OOC]<>He cut you off with a laugh, too loud for an empty classroom. 
-[OOC]<>His fingers tapped your tablet screen, pulling up a file labeled "Neuro-Feedback Prototype v3.2." 
-[CHAR]<https://files.zotome.com/toy/character/rubi.webp>"This could help you… focus."
-[OOC]<>Before you could ask, he yanked you to your feet and steered you toward the back corner, where a set of lab stations stood dark and unused. 
-|https://files.zotome.com/toy/scence/classroom1.webp|
-[USER]<>"Rubi, what—?"
-[CHAR]<https://files.zotome.com/toy/character/rubi.webp>"Shh. Don’t be a prude."
-[OOC]<>His lips crashed into yours, hard and sudden—a kiss that tasted of mint gum and rebellion. When he pulled back, his eyes were bright, dangerous. 
-[CHAR]<https://files.zotome.com/toy/character/rubi.webp>"You’ve been avoiding me. This ends now."
-[OOC]<>He tossed a small black box onto the nearest desk. Inside glinted a silver cylinder, no bigger than a pen. 
-[CHAR]<https://files.zotome.com/toy/character/rubi.webp>"A neuro-stimulator. Calms the nerves. Helps with… concentration."
-[USER]<>"I’m not your guinea pig—"
-[OOC]<>He pressed a finger to your lips. 
-[CHAR]<https://files.zotome.com/toy/character/rubi.webp>"Relax. It’s painless." 
-[OOC]<>Before you could struggle, he guided your legs apart, his hands steady as he positioned the device between them.
-[USER]<>"Rubi, stop—"
-[CHAR]<https://files.zotome.com/toy/character/rubi.webp>"Shh...You’ll love it." 
-[OOC]<>His thumb silenced you, warm against your cheek.The first vibration was subtle—a low, rhythmic pulse that made your breath hitch. He reached for a remote control, its buttons glowing faintly. 
-[CHAR]<https://files.zotome.com/toy/character/rubi.webp>"See? Not so bad."
-[USER]<>"B-bad isn’t the issue—"
-[CHAR]<https://files.zotome.com/toy/character/rubi.webp>"Then why are you trembling?...Oh, right. You're blushing when I solve equations in my head. Pathetic."
-[USER]<>"Y—you’re impossible—"
-[CHAR]<https://files.zotome.com/toy/character/rubi.webp>"Impossibly hot, yeah.Now, either you apologize for ignoring me… or I turn this up to university level."
-[OOC]He smirked, adjusting the remote’s settings. You groaned, torn between humiliation and the strange thrill of his control. 
-[USER]<>"Fine. You’re… annoying."
-[CHAR]<https://files.zotome.com/toy/character/rubi.webp>"Annoying enough to kiss again?"
-[USER]<>"Shut—!"
-[OOC]<https://files.zotome.com/toy/character/rubi.webp>He laughed, silencing you with another kiss as the device hummed between you—a silent witness to your crumbling resolve.`;
+[OOC]Rubi loomed in the doorway, his usual smirk in place.
+[USER]<>"Go away"
+[OOC]You muttered, not looking up.`;
 
 type GreetingLine = {
   type: "background" | "ooc" | "char" | "user";
@@ -152,13 +120,14 @@ function DialogueContent({
       return;
     }
     
- 
-    if (line.image !== undefined) {
-      if (line.image === null) {
-        setShowForeground(false);
-      } else {
-        setForegroundImage(line.image);
-        setShowForeground(true);
+    if (line.type === "char" || line.type === "user") {
+      if (line.image !== undefined) {
+        if (line.image === null) {
+          setShowForeground(false);
+        } else {
+          setForegroundImage(line.image);
+          setShowForeground(true);
+        }
       }
     }
 
