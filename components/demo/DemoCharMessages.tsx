@@ -43,7 +43,7 @@ const DemoCharMessages = function Messages({
   const { isLoading, isError, data } = useAssistantMessageTracker();
   const [parsedGameData, setParsedGameData] = useState<any>(null);
 
-  const { sendTouchCommand } = useDeviceCommunication();
+  const { sendTouchCommand, sendPresetModelCommand } = useDeviceCommunication();
 
   useEffect(() => {
     if (data && data.choices && data.choices.length > 0) {
@@ -63,12 +63,13 @@ const DemoCharMessages = function Messages({
 
           // 处理触摸命令
           if (gameData?.isTouch) {
-            if (gameData?.mode>0){
-               const { preset, power, duration } = gameData;
-               sendPresetModelCommand(preset, power, duration);
-           }else{
-               const { power, duration } = gameData;
-               sendTouchCommand(power, duration);
+            if (gameData?.mode > 0) {
+              const { preset, power, duration } = gameData;
+              sendPresetModelCommand(preset, power, duration);
+            } else {
+              const { power, duration } = gameData;
+              sendTouchCommand(power, duration);
+            }
           }
         } else {
           // 数据验证失败
