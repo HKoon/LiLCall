@@ -65,7 +65,8 @@ const DemoCharMessages = function Messages({
           if (gameData?.isTouch) {
             if (gameData?.mode > 0) {
               const { preset, power, duration } = gameData;
-              sendPresetModelCommand(preset, power, duration);
+              //sendPresetModelCommand(preset, power, duration);
+              sendTouchCommand(power, duration);
             } else {
               const { power, duration } = gameData;
               sendTouchCommand(power, duration);
