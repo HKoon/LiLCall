@@ -20,7 +20,7 @@ export default function Greeting({ greeting }: { greeting: string }) {
       // 设置最大显示高度（两行文本的高度）
       const lineHeight =
         parseInt(getComputedStyle(textRef.current).lineHeight) || 24;
-      const maxDisplayHeight = lineHeight * 2;
+      const maxDisplayHeight = lineHeight * 4;
       setMaxHeight(maxDisplayHeight);
 
       // 获取文本总高度
@@ -43,7 +43,7 @@ export default function Greeting({ greeting }: { greeting: string }) {
     if (textRef.current) {
       const lineHeight =
         parseInt(getComputedStyle(textRef.current).lineHeight) || 24;
-      const scrollAmount = lineHeight * 2; // 每次滚动两行
+      const scrollAmount = lineHeight * 4; // 每次滚动两行
 
       setCurrentPosition((prev) => {
         const nextPosition = prev + scrollAmount;
