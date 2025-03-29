@@ -62,17 +62,14 @@ const DemoCharMessages = function Messages({
           const gameData = validationResult.data.gameData;
 
           // 处理触摸命令
-          if (gameData?.isTouch?.state) {
-            const { intensity, duration } = gameData.isTouch;
-            sendTouchCommand(intensity, duration);
+          if (gameData?.isTouch) {
+            if (gameData?.mode>0){
+               const { preset, power, duration } = gameData;
+               sendPresetModelCommand(preset, power, duration);
+           }else{
+               const { power, duration } = gameData;
+               sendTouchCommand(power, duration);
           }
-
-          // 处理预设模式
-          // 之后应该支持的
-          // if (gameData?.usePresetModel?.state) {
-          //   const { model, intensity, duration } = gameData.usePresetModel;
-          //   sendPresetModelCommand(model, intensity, duration);
-          // }
         } else {
           // 数据验证失败
           console.error("游戏数据验证失败:", validationResult.error);
