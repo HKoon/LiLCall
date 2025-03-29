@@ -4,6 +4,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { VoiceProvider, useVoice } from "@humeai/voice-react";
 import Input from "./Input";
 import DemoCharMessages from "./DemoCharMessages";
+import { AssistantMessage } from "./AssistantMessage";
 
 const CHARACTER_NAME = "Rubi";
 const GREETING = `|https://files.zotome.com/toy/scence/classroom2.webp|
@@ -43,7 +44,7 @@ const GREETING = `|https://files.zotome.com/toy/scence/classroom2.webp|
 [USER]<>"Fine. You’re… annoying."
 [CHAR]<https://files.zotome.com/toy/character/rubi.webp>"Annoying enough to kiss again?"
 [USER]<>"Shut—!"
-[OOC]He laughed, silencing you with another kiss as the device hummed between you—a silent witness to your crumbling resolve.`;
+[OOC]<https://files.zotome.com/toy/character/rubi.webp>He laughed, silencing you with another kiss as the device hummed between you—a silent witness to your crumbling resolve.`;
 
 type GreetingLine = {
   type: "background" | "ooc" | "char" | "user";
@@ -68,6 +69,14 @@ function DialogueContent({
   const [isAnimating, setIsAnimating] = useState(false);
   const [greetingCompleted, setGreetingCompleted] = useState(false);
   const { status } = useVoice();
+  const [showGreetingContent, setShowGreetingContent] = useState(true);
+
+  // 当开始通话时隐藏问候内容
+  useEffect(() => {
+    if (status.value === "connected") {
+      setShowGreetingContent(false);
+    }
+  }, [status.value]);
 
   useEffect(() => {
     if (!GREETING) return;
@@ -170,7 +179,7 @@ function DialogueContent({
   };
 
   const handleNextLine = () => {
-    if (!isAnimating) {
+    if (!isAnimating && showGreetingContent) {
       handleLineChange(currentLineIndex + 1);
     }
   };
@@ -180,12 +189,7 @@ function DialogueContent({
   return (
     <div 
       className="relative w-[100dvw] h-[100dvh]"
-      onClick={(e) => {
-        const target = e.target as HTMLElement;
-        if (!target.closest('.input-area')) {
-          handleNextLine();
-        }
-      }}
+      onClick={handleNextLine}
     >
       <AnimatePresence mode="wait">
         <motion.div
@@ -232,7 +236,7 @@ function DialogueContent({
       <div className="absolute inset-0 flex flex-col justify-end overflow-y-hidden w-full">
         <div className="h-1/2">
           <AnimatePresence mode="wait">
-            {currentLine && (
+            {showGreetingContent && currentLine && (
               <motion.div
                 key={`line-${currentLineIndex}`}
                 initial={{ opacity: 0, y: 20 }}
@@ -241,14 +245,17 @@ function DialogueContent({
                 transition={{ duration: 0.5 }}
                 className="w-full"
               >
-                {(currentLine.type === "ooc" || currentLine.type === "char") && (
+                {currentLine.type === "ooc" && (
                   <div className="max-w-2xl mx-auto bg-black/30 rounded-xl p-4 backdrop-blur-sm text-white">
-                    {currentLine.type === "char" && (
-                      <div className="text-sm font-medium mb-2">
-                        {CHARACTER_NAME}
-                      </div>
-                    )}
                     {currentLine.content}
+                  </div>
+                )}
+                {currentLine.type === "char" && (
+                  <div className="max-w-2xl mx-auto">
+                    <AssistantMessage 
+                      content={currentLine.content} 
+                      characterName={CHARACTER_NAME}
+                    />
                   </div>
                 )}
                 {currentLine.type === "user" && (
