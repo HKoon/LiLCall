@@ -153,24 +153,7 @@ export function DebugPanel({
                           : "未激活"}
                       </div>
                     </div>
-
-                    <div className="bg-gray-50 dark:bg-gray-700/50 p-3 rounded-md">
-                      <div className="text-xs text-gray-500 dark:text-gray-400 mb-1">
-                        性行为状态
-                      </div>
-                      <div className="font-medium flex items-center">
-                        <div
-                          className={`w-2 h-2 rounded-full mr-2 ${
-                            parsedGameData.gameData?.inSex
-                              ? "bg-green-500"
-                              : "bg-gray-300"
-                          }`}
-                        ></div>
-                        {parsedGameData.gameData?.inSex ? "激活" : "未激活"}
-                      </div>
-                    </div>
-                  </div>
-
+                    
                   {/* 触摸参数区域 */}
                   {parsedGameData.gameData?.isTouch && (
                     <div className="bg-gray-50 dark:bg-gray-700/50 p-3 rounded-md">
