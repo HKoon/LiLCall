@@ -8,7 +8,7 @@ type CommandMessage = {
 type ModelMessage = {
   type: "model";
   data: {
-    model: number;
+    preset: number;
     power: number;
     duration: number;
   };
